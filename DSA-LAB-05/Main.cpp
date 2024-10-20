@@ -114,7 +114,13 @@ int main()
 	int choice;
 	do
 	{
-		cout << "MENU: \n1. Insert a new student.\n2. Insert a new faculty member.\n3. Insert a new administration member.\n4.Display the queue.\n5. Exit\n";
+			cout << "MENU: ";
+	cout << "\n1. Insert a new student.";
+	cout << "\n2. Insert a new faculty member.";
+	cout << "\n3. Insert a new administration member.";
+	cout << "\n 4.Delete.";
+	cout << "\n5.Display the queue.";
+	cout << "\n6. Exit\n";
 		cout << "Enter your choice:";
 		cin >> choice;
 		switch (choice)
