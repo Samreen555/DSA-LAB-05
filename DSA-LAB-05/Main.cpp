@@ -62,23 +62,34 @@ public:
 		rear = (rear + 1) % maxQueue; // Update rear
 		cout << "Inserted: " << item.name << " (" << item.role << ")\n";
 	}
-	Itemtype dequeue()
+		Itemtype dequeue()
 	{
 		if (isEmpty()) {
 			cout << "Queue is empty, can't remove elements.\n";
 			return { "", "" };  // Return an empty item
 		}
-		else {
-			Itemtype item = items[front];
-			front = (front + 1) % maxQueue;
+		int HighestPriorityIndex = front;
+		for (int i = 1; i < count; i++) {
+			int current_index = (front + i) % maxQueue;
+			if (getPriority(items[current_index].role) < getPriority(items[HighestPriorityIndex].role)) {
+				HighestPriorityIndex = current_index;
+			}
+		}
+		
+			Itemtype item = items[HighestPriorityIndex];
+			cout << "Removed:"<<item.name<<"("<<item.role<<")"<<endl;
+			for (int i = HighestPriorityIndex; i != rear; i = (i + 1) % maxQueue) {
+				items[i] = items[(i + 1) % maxQueue];
+			}
+			rear = (rear - 1 + maxQueue) % maxQueue;
 			count--;
 			if (isEmpty()) { // Reset the queue if it becomes empty
 				front = rear = -1;
 			}
-			cout << "Removed: " << item.name << " (" << item.role << ")\n";
 			return item;
-		}
+		
 	}
+
 	void display() {
 		if (isEmpty()) {
 			cout << "Queue is empty.\n";
@@ -129,17 +140,20 @@ int main()
 			newAdmin.role = "Administ";
 			q.enqueue(newAdmin);
 			break;
-		case 4:
-			q.display();
-			break;
-		case 5:
-			cout << "Exiting...\n";
-			break;
-		default:
-			cout << "Invalid choice.\n";
-			break;
-		}
-	} while (choice != 5);
+			case 4:
+		q.dequeue();
+		break;
+	case 5:
+		q.display();
+		break;
+	case 6:
+		cout << "Exiting...\n";
+		break;
+	default:
+		cout << "Invalid choice.\n";
+		break;
+	}
+} while (choice != 6);
 
 	return 0;
 }
